@@ -10,5 +10,8 @@
     environment.systemPackages = with pkgs; [
         htop
         lsd
+        fish
     ];
+
+    users.users.josh.shell = "/run/current-system/sw/bin/fish";
 }

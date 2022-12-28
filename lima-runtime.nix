@@ -115,7 +115,6 @@ in {
         uid = LIMA_CIDATA_UID;
         home = "/home/${LIMA_CIDATA_USER}.linux";
         group = "users";
-        shell = "/bin/bash";
         isSystemUser = true;
         extraGroups = [ "wheel" ];
         createHome = true;
