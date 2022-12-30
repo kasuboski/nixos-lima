@@ -6,7 +6,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = { self, nixpkgs, nixos-generators, ... }: {
+  outputs = { self, nixpkgs, nixos-generators, ... }@attrs: {
     packages.x86_64-linux = {
       box = nixos-generators.nixosGenerate {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
@@ -24,6 +24,14 @@
         ];
         format = "raw-efi";
       };
+    };
+    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+      system = "aarch64-linux";
+      specialArgs = attrs;
+      modules = [
+        ./configuration.nix
+        ./user-config.nix
+      ];
     };
   };
 }

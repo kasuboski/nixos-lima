@@ -1,7 +1,10 @@
 { config, modulesPath, pkgs, lib, ... }:
 {
     imports = [
-        (fetchTarball "https://github.com/msteen/nixos-vscode-server/tarball/master")
+        (fetchTarball {
+            url = "https://github.com/msteen/nixos-vscode-server/tarball/master";
+            sha256 = "1qga1cmpavyw90xap5kfz8i6yz85b0blkkwvl00sbaxqcgib2rvv";
+        })
     ];
 
     services.vscode-server.enable = true;
@@ -13,5 +16,9 @@
         fish
     ];
 
-    users.users.josh.shell = "/run/current-system/sw/bin/fish";
+    users.users.josh = {
+        shell = "/run/current-system/sw/bin/fish";
+        isNormalUser = true;
+        group = "users";
+    };
 }

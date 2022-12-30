@@ -3,7 +3,9 @@
     imports = [
         (modulesPath + "/profiles/qemu-guest.nix")
         ./lima-init.nix
-    ] ++ lib.optional (builtins.pathExists ./user-config.nix) ./user-config.nix;
+    ];
+
+    nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
     # ssh
     services.openssh.enable = true;

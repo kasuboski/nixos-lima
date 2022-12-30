@@ -103,6 +103,7 @@ in {
         bash
         sshfs
         fuse3
+        git
     ];
 
     boot.kernel.sysctl = {
@@ -115,7 +116,7 @@ in {
         uid = LIMA_CIDATA_UID;
         home = "/home/${LIMA_CIDATA_USER}.linux";
         group = "users";
-        isSystemUser = true;
+        isNormalUser = true;
         extraGroups = [ "wheel" ];
         createHome = true;
         openssh.authorizedKeys.keys = LIMA_SSH_KEYS;

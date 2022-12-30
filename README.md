@@ -20,6 +20,7 @@ On your mac:
 * Move `nixos-aarch64.img` under `imgs`
 
 ## Running NixOS
+Edit `user-config.example.nix` and save as `user-config.nix`.
 ```bash
 limactl start --name=default nixos.yaml
 limactl copy user-config.nix default:/tmp/
