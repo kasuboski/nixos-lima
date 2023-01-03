@@ -13,7 +13,14 @@
     environment.systemPackages = with pkgs; [
         htop
         lsd
+        fd
+        bat
+        fzf
+        zoxide
+        jq
+        yq
         fish
+        starship
     ];
 
     programs.fish.enable = true;
