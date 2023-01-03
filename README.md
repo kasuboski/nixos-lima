@@ -13,7 +13,7 @@ reboot
 
 # build image
 nix --extra-experimental-features nix-command --extra-experimental-features flakes build .#packages.aarch64-linux.box
-cp result /tmp/lima/nixos-aarch64.img
+cp $(readlink result)/nixos.img /tmp/lima/nixos-aarch64.img
 ```
 
 On your mac:
@@ -23,11 +23,9 @@ On your mac:
 Edit `user-config.example.nix` and save as `user-config.nix`.
 ```bash
 limactl start --name=default nixos.yaml
-limactl copy user-config.nix default:/tmp/
 
 lima
-sudo mv /tmp/user-config.nix /etc/nixos/
-sudo nixos-rebuild switch
+nixos-rebuild switch --flake .#nixos --use-remote-sudo
 ```
 
 
