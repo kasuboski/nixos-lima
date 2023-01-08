@@ -8,7 +8,7 @@
   };
   outputs = { self, nixpkgs, nixos-generators, ... }@attrs: {
     packages.x86_64-linux = {
-      box = nixos-generators.nixosGenerate {
+      img = nixos-generators.nixosGenerate {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         modules = [
           ./configuration.nix
@@ -17,7 +17,7 @@
       };
     };
     packages.aarch64-linux = {
-      box = nixos-generators.nixosGenerate {
+      img = nixos-generators.nixosGenerate {
         pkgs = nixpkgs.legacyPackages.aarch64-linux;
         modules = [
           ./configuration.nix
