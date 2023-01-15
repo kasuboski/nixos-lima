@@ -35,5 +35,9 @@
             ./user-config.nix
           ];
         };
+
+        nixosModules.lima = {
+          imports = [ ./lima.nix ];
+        };
       };
 }
