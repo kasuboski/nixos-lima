@@ -21,18 +21,19 @@
           img = nixos-generators.nixosGenerate {
             inherit pkgs;
             modules = [
-              ./configuration.nix
+              ./lima.nix
             ];
             format = "raw-efi";
           };
         };
+      }) // { 
         nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-          inherit system;
+          system = "aarch64-linux"; # doesn't play nice with each system :shrug:
           specialArgs = attrs;
           modules = [
-            ./configuration.nix
+            ./lima.nix
             ./user-config.nix
           ];
         };
-      });
+      };
 }
