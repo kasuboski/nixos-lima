@@ -1,37 +1,38 @@
 {
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = { self, nixpkgs, nixos-generators, ... }@attrs: {
-    packages.x86_64-linux = {
-      img = nixos-generators.nixosGenerate {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
-        modules = [
-          ./configuration.nix
-        ];
-        format = "raw-efi";
-      };
-    };
-    packages.aarch64-linux = {
-      img = nixos-generators.nixosGenerate {
-        pkgs = nixpkgs.legacyPackages.aarch64-linux;
-        modules = [
-          ./configuration.nix
-        ];
-        format = "raw-efi";
-      };
-    };
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-      system = "aarch64-linux";
-      specialArgs = attrs;
-      modules = [
-        ./configuration.nix
-        ./user-config.nix
-      ];
-    };
-  };
+  outputs = { self, nixpkgs, flake-utils, nixos-generators, ... }@attrs: 
+    # Create system-specific outputs for lima systems
+    let
+      ful = flake-utils.lib;
+    in
+    ful.eachSystem [ ful.system.x86_64-linux ful.system.aarch64-linux ] (system:
+      let
+        pkgs = import nixpkgs { inherit system; };
+      in
+      {
+        packages = {
+          img = nixos-generators.nixosGenerate {
+            inherit pkgs;
+            modules = [
+              ./configuration.nix
+            ];
+            format = "raw-efi";
+          };
+        };
+        nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = attrs;
+          modules = [
+            ./configuration.nix
+            ./user-config.nix
+          ];
+        };
+      });
 }

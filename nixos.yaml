@@ -6,6 +6,8 @@ images:
   - location: "./imgs/nixos-x86.img"
     arch: "x86_64"
 
+cpus: 6
+
 mounts:
 - location: "~"
   writable: true
